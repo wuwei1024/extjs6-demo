@@ -1,5 +1,5 @@
 Ext.define('Demo.view.student.Student', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.grid.Panel',
     xtype: 'student',
 
     requires: [
@@ -12,37 +12,34 @@ Ext.define('Demo.view.student.Student', {
         type: 'student'
     },
 
+    id: 'student_grid',
     title: 'Students Information',
 
     tbar: [
-        { xtype: 'button', text: 'Refresh', handler: 'refresh' },
-        { xtype: 'button', text: 'Add', handler: 'add' },
-        { xtype: 'button', text: 'Delete', handler: 'delete' }
+        {xtype: 'button', text: 'Refresh', handler: 'refresh'},
+        {xtype: 'button', text: 'Add', handler: 'add'},
+        {xtype: 'button', text: 'Delete', handler: 'delete'}
     ],
 
-    items: [
+    columns: [
+        {text: 'No.', xtype: 'rownumberer', align: 'center', width: 50},
+        {text: 'ID', dataIndex: 'id', align: 'center'},
+        {text: 'Name', dataIndex: 'name', align: 'center'},
+        {text: 'Gender', dataIndex: 'gender', align: 'center'},
+        {text: 'Course', dataIndex: 'course', align: 'center', width: 150},
         {
-            xtype: 'grid',
-            id: 'student_grid',
-            columns: [
-                { text: 'No.', xtype: 'rownumberer', align: 'center', width: 50 },
-                { text: 'ID', dataIndex: 'id', align: 'center' },
-                { text: 'Name', dataIndex: 'name', align: 'center' },
-                { text: 'Gender', dataIndex: 'gender', align: 'center' },
-                { text: 'Course', dataIndex: 'course', align: 'center', width: 150 },
-                {
-                    text: 'AddTime', dataIndex: 'addTime', align: 'center', width: 200,
-                    renderer: function (time) {
-                        return dateFormat(time,'yyyy-MM-dd HH:mm:ss');
-                    }
-                }
-            ],
-            bind: {
-                store: '{items}'
-            },
-            listeners: {
-                itemdblclick: 'modify'
+            text: 'AddTime', dataIndex: 'addTime', align: 'center', width: 200,
+            renderer: function (time) {
+                return dateFormat(time, 'yyyy-MM-dd HH:mm:ss');
             }
         }
-    ]
+    ],
+
+    bind: {
+        store: '{items}'
+    },
+
+    listeners: {
+        itemdblclick: 'modify'
+    }
 });

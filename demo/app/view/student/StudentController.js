@@ -3,7 +3,7 @@ Ext.define('Demo.view.student.StudentController', {
     alias: 'controller.student',
 
     //初始化
-    init: function () { },
+    init: function () {},
 
     //刷新数据
     refresh: function () {
@@ -33,9 +33,9 @@ Ext.define('Demo.view.student.StudentController', {
     },
 
     //保存新增或修改的数据
-    onSaveClick: function () {
+    onSaveClick: function (btn, e) {
         var winTitle = this.getView().getTitle();
-        var form = this.lookupReference('addForm');
+        var form = btn.up('form');
         if (form.isValid()) {
             var values = form.getValues();
             var params = JSON.stringify(values);
@@ -55,25 +55,24 @@ Ext.define('Demo.view.student.StudentController', {
     },
 
     //取消
-    onCancelClick: function(){
+    onCancelClick: function () {
         this.getView().close();
     },
 
     //删除数据
-    delete: function () {
-        var grid = Ext.getCmp('student_grid');
+    delete: function (btn, e) {
+        var me = this;
+        var grid = btn.up('grid');
         var selected = grid.getSelection();
         if (selected && selected.length === 1) {
             Ext.MessageBox.confirm('Hint', 'Sure to delete the item?', function (btn) {
                 if (btn === 'yes') {
-                    var params = {
-                        id: selected[0].get('id')
-                    };
+                    var params = {id: selected[0].get('id')};
                     var result = me.sendAjaxRequest('delStudentById', params);
                     if (result && result.status === 1) {
-                        var itemStore = grid.getStore();
+                        var store = grid.getStore();
                         Ext.each(selected, function () {
-                            itemStore.remove(this);
+                            store.remove(this);
                         });
                     } else {
                         Ext.Msg.alert('Message', 'Delete failed, please try again later!');

@@ -20,7 +20,6 @@ Ext.define('Demo.view.student.StudentNew', {
             labelAlign: 'right',
             allowBlank: false
         },
-        reference: 'addForm',
         defaultType: 'textfield',
         items: [
             {
